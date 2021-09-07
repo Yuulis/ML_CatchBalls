@@ -1,6 +1,7 @@
 # ML_CatchBalls
-Learning catching balls by ML-Agents.
+Learning catching balls by [ML-Agents](https://github.com/Unity-Technologies/ml-agents).
 
+## **Basic**
 ## Environment
 ![Environment](https://user-images.githubusercontent.com/79734873/132329233-3cc79605-9425-455d-99ef-589f8e3de0b4.png)
 ### Training Area
@@ -20,6 +21,6 @@ Learning catching balls by ML-Agents.
     Interval: 0.75s
 
 ## Reward
-1. Catching GreenBall: `+1.0`.
-2. Catching BlueBall: `-1.0`.
-3. Missing GreenBall: `-1.0 / (Number of green balls that fall in one training)`.
+1. Catching GreenBall: **+1.0**.
+2. Catching BlueBall: **-1.0**.
+3. Missing GreenBall: **-1.0 / (Number of green balls that fall in one training)**.

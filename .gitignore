@@ -8,3 +8,5 @@
 **/Library/
 **/Temp/
 **/obj/
+.fake
+.ionide

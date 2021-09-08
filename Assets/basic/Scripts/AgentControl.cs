@@ -17,15 +17,21 @@ public class AgentControl : Agent
     public bool OnEpisode;
 
     Settings settings;
+    DataDisplayScript TextDisplay;
 
-    int GreenCounter;
-    int BlueCounter;
+    [HideInInspector]
+    public int GreenCounter;
+    [HideInInspector]
+    public int BlueCounter;
+    [HideInInspector]
+    public int MissingGreenCounter;
 
     float dt; // Timer
 
     public override void Initialize()
     {
         settings = FindObjectOfType<Settings>();
+        TextDisplay = FindObjectOfType<DataDisplayScript>();
         Agent_rb = this.GetComponent<Rigidbody>();
     }
 
@@ -40,7 +46,10 @@ public class AgentControl : Agent
 
         GreenCounter = 0;
         BlueCounter = 0;
+        MissingGreenCounter = 0;
         dt = 0.0f;
+
+        TextDisplay.UpdateText();
     }
 
     public void MoveAgent(ActionBuffers actionBuffers)
@@ -71,6 +80,7 @@ public class AgentControl : Agent
             }
 
             MoveAgent(actionBuffers);
+            TextDisplay.UpdateText();
         }
     }
 

@@ -24,6 +24,7 @@ public class BallControl : MonoBehaviour
         {
             if (col.gameObject.CompareTag("GreenBall") && settings.AdditionalReward)
             {
+                control.MissingGreenCounter++;
                 control.GiveAdditionalReward();
             }
 

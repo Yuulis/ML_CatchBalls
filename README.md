@@ -1,5 +1,6 @@
 # ML_CatchBalls
-Learning catching balls by [ML-Agents](https://github.com/Unity-Technologies/ml-agents).
+Learning catching balls by [ML-Agents](https://github.com/Unity-Technologies/ml-agents).  
+This project is used [Release 17](https://github.com/Unity-Technologies/ml-agents/tree/release_17).
 
 ## **Basic**
 ## Environment

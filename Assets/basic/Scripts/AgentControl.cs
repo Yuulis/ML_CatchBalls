@@ -13,19 +13,17 @@ public class AgentControl : Agent
 {
     Rigidbody Agent_rb;
 
-    [HideInInspector]
-    public bool OnEpisode;
+    [HideInInspector] public bool OnEpisode;
 
     Settings settings;
-
-    int GreenCounter;
-    int BlueCounter;
+    DataDisplayScript displayer;
 
     float dt; // Timer
 
     public override void Initialize()
     {
         settings = FindObjectOfType<Settings>();
+        displayer = FindObjectOfType<DataDisplayScript>();
         Agent_rb = this.GetComponent<Rigidbody>();
     }
 
@@ -38,9 +36,15 @@ public class AgentControl : Agent
         Agent_rb.velocity = Vector3.zero;
         Agent_rb.angularVelocity = Vector3.zero;
 
-        GreenCounter = 0;
-        BlueCounter = 0;
+        displayer.AllGreenCnt = 0;
+        displayer.CatchGreenCnt = 0;
+        displayer.CatchBlueCnt = 0;
+        displayer.MissGreenCnt = 0;
+        displayer.Rate = 0f;
+
         dt = 0.0f;
+
+        displayer.DisplayUpdate();
     }
 
     public void MoveAgent(ActionBuffers actionBuffers)
@@ -62,6 +66,9 @@ public class AgentControl : Agent
 
     public override void OnActionReceived(ActionBuffers actionBuffers)
     {
+        if (displayer.AllGreenCnt != 0) displayer.Rate = ((float)displayer.CatchGreenCnt / displayer.AllGreenCnt) * 100f;
+        displayer.DisplayUpdate();
+
         if (OnEpisode)
         {
             dt += Time.deltaTime;
@@ -88,13 +95,13 @@ public class AgentControl : Agent
         {
             if (col.gameObject.CompareTag("GreenBall"))
             {
-                GreenCounter++;
                 AddReward(1.0f);
+                displayer.CatchGreenCnt++;
+                displayer.AllGreenCnt++;
             }
 
             else if (col.gameObject.CompareTag("BlueBall"))
             {
-                BlueCounter++;
                 AddReward(-1.0f);
             }
         }

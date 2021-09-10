@@ -6,11 +6,13 @@ public class BallControl : MonoBehaviour
 {
     AgentControl control;
     Settings settings;
+    DataDisplayScript displayer;
 
     void Start()
     {
         control = FindObjectOfType<AgentControl>();
         settings = FindObjectOfType<Settings>();
+        displayer = FindObjectOfType<DataDisplayScript>();
     }
 
     void Update()
@@ -22,8 +24,10 @@ public class BallControl : MonoBehaviour
     {
         if (col.gameObject.CompareTag("Floor"))
         {
-            if (col.gameObject.CompareTag("GreenBall") && settings.AdditionalReward)
+            if (this.gameObject.CompareTag("GreenBall") && settings.AdditionalReward)
             {
+                displayer.MissGreenCnt++;
+                displayer.AllGreenCnt++;
                 control.GiveAdditionalReward();
             }
 
@@ -31,6 +35,10 @@ public class BallControl : MonoBehaviour
         }
         else if (col.gameObject.CompareTag("Agent"))
         {
+            if (this.gameObject.CompareTag("BlueBall"))
+            {
+                displayer.CatchBlueCnt++;
+            }
             Destroy(this.gameObject);
         }
     }

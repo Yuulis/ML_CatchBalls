@@ -138,8 +138,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ec9d7faf0ba9fa94ca2a80b2ba365352, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  onTraining: 1
   BallSpawnInterval: 1
   BlueBallRate: 40
+  HighWall: 0
   AgentSpeed: 20
   EpisodeLength: 30
   AdditionalReward: 1

@@ -26,8 +26,12 @@ public class BallControl : MonoBehaviour
         {
             if (this.gameObject.CompareTag("GreenBall") && settings.AdditionalReward)
             {
-                displayer.MissGreenCnt++;
-                displayer.AllGreenCnt++;
+                if (!settings.onTraining)
+                {
+                    displayer.MissGreenCnt++;
+                    displayer.AllGreenCnt++;
+                }
+
                 control.GiveAdditionalReward();
             }
 
@@ -35,7 +39,7 @@ public class BallControl : MonoBehaviour
         }
         else if (col.gameObject.CompareTag("Agent"))
         {
-            if (this.gameObject.CompareTag("BlueBall"))
+            if (this.gameObject.CompareTag("BlueBall") && !settings.onTraining)
             {
                 displayer.CatchBlueCnt++;
             }

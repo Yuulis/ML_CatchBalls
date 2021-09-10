@@ -15,6 +15,7 @@ public class AgentControl : Agent
 
     [HideInInspector] public bool OnEpisode;
 
+    // Other Scripts
     Settings settings;
     DataDisplayScript displayer;
 
@@ -23,7 +24,8 @@ public class AgentControl : Agent
     public override void Initialize()
     {
         settings = FindObjectOfType<Settings>();
-        displayer = FindObjectOfType<DataDisplayScript>();
+        if (!settings.onTraining) displayer = FindObjectOfType<DataDisplayScript>();
+
         Agent_rb = this.GetComponent<Rigidbody>();
     }
 
@@ -36,15 +38,18 @@ public class AgentControl : Agent
         Agent_rb.velocity = Vector3.zero;
         Agent_rb.angularVelocity = Vector3.zero;
 
-        displayer.AllGreenCnt = 0;
-        displayer.CatchGreenCnt = 0;
-        displayer.CatchBlueCnt = 0;
-        displayer.MissGreenCnt = 0;
-        displayer.Rate = 0f;
+        if (!settings.onTraining)
+        {
+            displayer.AllGreenCnt = 0;
+            displayer.CatchGreenCnt = 0;
+            displayer.CatchBlueCnt = 0;
+            displayer.MissGreenCnt = 0;
+            displayer.Rate = 0f;
+
+            displayer.DisplayUpdate();
+        }
 
         dt = 0.0f;
-
-        displayer.DisplayUpdate();
     }
 
     public void MoveAgent(ActionBuffers actionBuffers)
@@ -66,8 +71,11 @@ public class AgentControl : Agent
 
     public override void OnActionReceived(ActionBuffers actionBuffers)
     {
-        if (displayer.AllGreenCnt != 0) displayer.Rate = ((float)displayer.CatchGreenCnt / displayer.AllGreenCnt) * 100f;
-        displayer.DisplayUpdate();
+        if (!settings.onTraining)
+        {
+            if (displayer.AllGreenCnt != 0) displayer.Rate = ((float)displayer.CatchGreenCnt / displayer.AllGreenCnt) * 100f;
+            displayer.DisplayUpdate();
+        }
 
         if (OnEpisode)
         {
@@ -96,8 +104,11 @@ public class AgentControl : Agent
             if (col.gameObject.CompareTag("GreenBall"))
             {
                 AddReward(1.0f);
-                displayer.CatchGreenCnt++;
-                displayer.AllGreenCnt++;
+                if (!settings.onTraining)
+                {
+                    displayer.CatchGreenCnt++;
+                    displayer.AllGreenCnt++;
+                }
             }
 
             else if (col.gameObject.CompareTag("BlueBall"))

@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class Settings : MonoBehaviour
 {
+    // Training Mode?
+    public bool onTraining;
+
     // Ball spawning interval (sec)
     public float BallSpawnInterval;
 
